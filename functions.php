@@ -117,7 +117,11 @@ function subrosa_scripts() {
 	wp_enqueue_script( 'flickity', get_template_directory_uri() . '/js/flickity.pkgd.min.js', array(),'2.21', true );
 	wp_enqueue_script( 'flickity-init', get_template_directory_uri() . '/js/flickity-init.js', array(), _S_VERSION, true );
 	wp_enqueue_style( 'flickity-style', get_template_directory_uri() . '/css/flickity.css', array(),'2.21' );
-
+	wp_enqueue_script( 'soundcloud', get_template_directory_uri() . '/js/soundcloud.js', array(), _S_VERSION, true );
+	wp_enqueue_script( 'podcast', get_template_directory_uri() . '/js/podcast.js', array('soundcloud'), _S_VERSION, true );
+	if(is_page_template('post-grid.php')){
+		wp_enqueue_script( 'load-more', get_template_directory_uri() . '/js/load-more.js', array('jquery'), _S_VERSION, true );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'subrosa_scripts' );
 
@@ -144,6 +148,12 @@ require get_template_directory() . '/inc/carbon.php';
  * Display blocks
  */
 require get_template_directory() . '/inc/blocks.php';
+
+/**
+ * Ajax Load More
+ */
+require get_template_directory() . '/inc/ajax.php';
+
 
 /**
  * Disable Gutenburg

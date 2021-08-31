@@ -8,7 +8,9 @@ add_action( 'carbon_fields_register_fields', 'sr_attach_theme_options' );
 function sr_attach_theme_options() {
     Container::make( 'post_meta', 'Titling' )
     ->set_context( 'carbon_fields_after_title' )
-    ->where( 'post_type', '=', 'post' )
+    ->or_where( 'post_type', '=', 'post' )
+    ->or_where ('post_type', '=', 'gallery')
+    ->or_where ('post_type', '=', 'podcast')
     ->add_fields( array(
         Field::make( 'checkbox', 'sr_home_feature', 'Feature on Home Page' )
         ->set_option_value( 'yes' ),
@@ -40,6 +42,31 @@ function sr_attach_theme_options() {
                 'value'=> 'portrait_2',
             )
         ) ),
+    ));
+
+    Container::make( 'post_meta', 'Gallery')
+    ->set_context( 'carbon_fields_after_title' )
+    ->set_priority( 'low' )
+    ->where( 'post_type', '=', 'gallery' )
+    ->add_fields( array(
+        Field::make('image','featured_image', 'Featured Image')
+        ->set_help_text('Appears with the title'),
+        Field::make('image','secondary_featured_image', 'Teaser Image 1'),
+        Field::make('image','tertiary_featured_image', 'Teaser Image 2'),
+        Field::make('complex', 'gallery_images', 'Gallery Images')
+        ->add_fields( array(
+            Field::make('image', 'gallery_image', 'Image'),
+            Field::make('rich_text', 'gallery_image_caption', 'Caption'),
+        )),
+    ));
+
+    Container::make('post_meta', 'Podcasts')
+    ->set_context( 'carbon_fields_after_title' )
+    ->set_priority( 'low' )
+    ->where( 'post_type', '=', 'podcast' )
+    ->add_fields( array(
+        Field::make('image','featured_image', 'Featured Image'),
+        Field::make('oembed','podcast_embed', 'Podcast Embed'),
     ));
 }
 

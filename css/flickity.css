@@ -45,19 +45,19 @@ https://flickity.metafizzy.co
 
 .flickity-button {
   position: absolute;
-  background: hsla(0, 0%, 100%, 0.75);
+  background: transparent;
   border: none;
-  color: #333;
+  color: #D14D2A;
 }
 
 .flickity-button:hover {
-  background: white;
   cursor: pointer;
+  color:#521406;
 }
 
 .flickity-button:focus {
   outline: none;
-  box-shadow: 0 0 0 5px #19F;
+  box-shadow: 0 0 0 5px #D14D2A;
 }
 
 .flickity-button:active {
@@ -73,30 +73,30 @@ https://flickity.metafizzy.co
 
 .flickity-button-icon {
   fill: currentColor;
+  transition: fill 200ms ease;
 }
 
 /* ---- previous/next buttons ---- */
 
 .flickity-prev-next-button {
   top: 50%;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
+  width: 120px;
+  height: 120px;
   /* vertically center */
   transform: translateY(-50%);
+  padding: 0;
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+  box-shadow:none;
+}
+.flickity-prev-next-button:hover {
+  box-shadow:none;
+  background-color: transparent;
+  filter:drop-shadow(1px 1px 1px rgba(0,0,0,0.8));
 }
 
-.flickity-prev-next-button.previous { left: 10px; }
-.flickity-prev-next-button.next { right: 10px; }
-/* right to left */
-.flickity-rtl .flickity-prev-next-button.previous {
-  left: auto;
-  right: 10px;
-}
-.flickity-rtl .flickity-prev-next-button.next {
-  right: auto;
-  left: 10px;
-}
+
+.flickity-prev-next-button.next { right: 0; }
+
 
 .flickity-prev-next-button .flickity-button-icon {
   position: absolute;
@@ -106,6 +106,9 @@ https://flickity.metafizzy.co
   height: 60%;
 }
 
+button.flickity-button.flickity-prev-next-button.previous {
+  display: none;
+}
 /* ---- page dots ---- */
 
 .flickity-page-dots {
@@ -134,4 +137,62 @@ https://flickity.metafizzy.co
 
 .flickity-page-dots .dot.is-selected {
   opacity: 1;
+}
+
+.flickity-enabled.is-fullscreen {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: hsl(40, 34%, 86%, 70%);
+  backdrop-filter: blur(6px);
+  padding-bottom: 35px;
+  z-index: 100;
+}
+
+
+/* prevent page scrolling when flickity is fullscreen */
+html.is-flickity-fullscreen {
+  overflow: hidden;
+}
+
+/* ---- flickity-fullscreen-button ---- */
+
+.flickity-fullscreen-button {
+  display: block;
+  right: 3%;
+  top: -30px;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  padding: 0;
+  box-shadow: none;
+}
+
+/* right-to-left */
+.flickity-rtl .flickity-fullscreen-button {
+  right: auto;
+  left: 10px;
+}
+
+.flickity-fullscreen-button-exit { display: none; }
+
+.flickity-enabled.is-fullscreen .flickity-fullscreen-button-exit { display: block; }
+.flickity-enabled.is-fullscreen .flickity-fullscreen-button-view { display: none; }
+
+.flickity-fullscreen-button .flickity-button-icon {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 4px;
+  top: 4px;
+}
+
+button.flickity-button.flickity-fullscreen-button.flickity-fullscreen-button-exit {
+  top: 1rem;
+}
+
+button.flickity-button.flickity-fullscreen-button.flickity-fullscreen-button-exit path {
+  fill:#521406;
 }

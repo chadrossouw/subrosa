@@ -29,12 +29,12 @@ function sh_init(){
 		'query_var'          => true,
 		'rewrite'            => array( 'slug' => 'podcasts' ),
 		'capability_type'    => 'post',
-		'taxonomies' 		 => array('category','tag'),
+		'taxonomies' 		 => array('category','post_tag'),
 		'has_archive'        => false,
 		'hierarchical'       => false,
 		'menu_position'      => 4,
         'menu_icon'           => 'dashicons-controls-volumeon',
-        'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt' ),
+        'supports'           => array( 'title', 'editor', 'author' ),
         
 	);
 
@@ -69,12 +69,12 @@ function sh_init(){
 		'query_var'          => true,
 		'rewrite'            => array( 'slug' => 'galleries' ),
 		'capability_type'    => 'post',
-		'taxonomies' 		 => array('category','tag'),
+		'taxonomies' 		 => array('category','post_tag'),
 		'has_archive'        => false,
 		'hierarchical'       => false,
 		'menu_position'      => 4,
         'menu_icon'           => 'dashicons-format-image',
-        'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt' ),
+        'supports'           => array( 'title', 'author',  ),
         
 	);
 

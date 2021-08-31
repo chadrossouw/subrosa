@@ -9,8 +9,8 @@ const links = document.querySelectorAll("#primary-menu a");
 const searchButton = document.querySelector('.search-button');
 const searchNav = document.querySelector('.nav-seach-form');
 const isMobileDevice = /Mobi/i.test(window.navigator.userAgent);
-const shareButton = document.querySelectorAll('.secret_history_share--button');
-const shareContainer = document.querySelectorAll('.secret_history_share');
+const shareButton = document.querySelectorAll('.subrosa_share--button');
+const shareContainer = document.querySelectorAll('.subrosa_share');
 
 hamburger.addEventListener("click", openMenu);
 links.forEach(link=>link.addEventListener("click", openMenu));
@@ -63,10 +63,10 @@ searchButton.addEventListener('click',(e)=>{
 		masthead.classList.toggle('search-open');
 })
 */
-/*Share Button
+/*Share Button*/
 if(isMobileDevice){
 shareButton.forEach((button)=>{
-	button.addEventListener('click', async ()=>{
+	button.addEventListener('click', async (e)=>{
 		const title = document.title;
 		const url = document.URL;
 		const data ={'url':url,'title':title};
@@ -74,7 +74,7 @@ shareButton.forEach((button)=>{
 			await navigator.share(data)
 			console.log = 'Shared successfully'
 		  } catch(err) {
-			openShare();
+			openShare(e);
 		  }
 	})
 });
@@ -83,23 +83,21 @@ shareButton.forEach((button)=>{
 else{
 	shareButton.forEach((button)=>{
 		button.addEventListener('click',openShare);
+		console.log(button);
 	});
 }
 
-function openShare(){
-	shareContainer.forEach((share)=>{
-		share.classList.toggle("open");
-		icons = share.querySelectorAll('.secret_history_share--icon');
-		icons.forEach((icon)=>{
-			icon.addEventListener('click',()=>{share.classList.remove("open")});
-		});
-	
-	})
-
+function openShare(e){
+	let share = e.currentTarget.parentNode;
+	share.classList.toggle("open");
+	let icons = share.querySelectorAll('.subrosa_share--icon');
+	icons.forEach((icon)=>{
+		icon.addEventListener('click',()=>{share.classList.remove("open")});
+	});
 }
 
 
-*/
+
 
 
 }());

@@ -19,8 +19,10 @@ get_header();
 			get_template_part( 'template-parts/content', get_post_type() );
 
 		endwhile; // End of the loop.
-		?>
-
+		?><div class="recent_posts"><?php
+		get_recent();
+		?></div>
+		
 	</main><!-- #main -->
 
 <?php

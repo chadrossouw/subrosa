@@ -63,6 +63,8 @@ if ( is_front_page() && is_home() ){
 					)
 				);
 				?>
+				<?php get_search_form(); ?>
+				<?php subrosa_social_media(); ?>
 			</div>
 		</nav><!-- #site-navigation -->
 	</header><!-- #masthead -->
