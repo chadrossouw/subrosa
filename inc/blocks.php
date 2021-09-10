@@ -138,7 +138,7 @@ function blocks_gallery($posts_per_page = 3, $pagination = false, $offset = 0){
             <?php echo !$pagination?'<h3><a href="/galleries">Picture Gallery</a></h3>':''; ?>
             <?php
             if($slides):
-                ?><div class="picture_gallery carousel">
+                ?><div class="picture_gallery carousel <?php echo $pagination?'no-flickity':''; ?>">
                     <div class="carousel_item first_slide">
                         <div class="picture_gallery_image">
                             <?php echo wp_get_attachment_image(carbon_get_the_post_meta('featured_image'),'full'); ?>
@@ -158,30 +158,31 @@ function blocks_gallery($posts_per_page = 3, $pagination = false, $offset = 0){
                         </a>
                     </div>
                     <?php 
-                    $count = count($slides);
-                    $current = 1;
-                    foreach($slides as $slide):
-                        ?><div class="carousel_item">
-                            <div class="picture_gallery_image">
-                                <?php echo wp_get_attachment_image($slide['gallery_image'],'full'); ?>
-                            </div>
-                            <div class="carousel_index"><h5><?php echo $title ; ?></h5><h5><?php echo $current.' | '.$count; ?></h5></div>
-                            <?php if ($slide['gallery_image_caption']): ?>
-                                <div class="picture_gallery_caption">
-                                    <?php echo apply_filters('the_content',$slide['gallery_image_caption']); ?>
+                    if(!$pagination):
+                        $count = count($slides);
+                        $current = 1;
+                        foreach($slides as $slide):
+                            ?><div class="carousel_item">
+                                <div class="picture_gallery_image">
+                                    <?php echo wp_get_attachment_image($slide['gallery_image'],'full'); ?>
                                 </div>
-                            <?php endif; ?>
-                        </div>
-                    <?php 
-                    $current++;
-                    endforeach; ?>
+                                <div class="carousel_index"><h5><?php echo $title ; ?></h5><h5><?php echo $current.' | '.$count; ?></h5></div>
+                                <?php if ($slide['gallery_image_caption']): ?>
+                                    <div class="picture_gallery_caption">
+                                        <?php echo apply_filters('the_content',$slide['gallery_image_caption']); ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        <?php 
+                        $current++;
+                        endforeach; 
+                        ?>
                         <div class="carousel_item share_slide">
                             <div class="picture_gallery_image">
                                 <?php echo wp_get_attachment_image(carbon_get_the_post_meta('featured_image'),'full'); ?>
                             </div>
                             <?php subrosa_share($permalink,  wp_get_attachment_image_url(carbon_get_the_post_meta('featured_image'),'full')); ?>
                         </div>
-                    <?php if(!$pagination): ?>
                         <div class="carousel_item last_slide">
                             <?php $galleries = get_posts(array('fields'=>'ids','numberposts'=>4,'post_type'=>'gallery', 'orderby'=>'rand'));
                             foreach($galleries as $gallery):
@@ -229,11 +230,14 @@ function blocks_podcast($posts_per_page=3,$pagination=false,$offset=0){
             $permalink = get_the_permalink($id);
             ?><div class="podcasts <?php echo $class; ?>">
                 <?php echo !$pagination?'<h3><a href="/podcasts">Podcast</a></h3>':''; ?>
-                <div class="podcast" data-id="<?php echo carbon_get_the_post_meta('podcast_embed'); ?>">
+                <div class="podcast <?php echo $pagination?'no-play':''?>" data-id="<?php echo carbon_get_the_post_meta('podcast_embed'); ?>">
                     <?php echo wp_get_attachment_image(carbon_get_the_post_meta('featured_image'),'full'); ?>
-                    <?php echo file_get_contents(get_template_directory_uri().'/assets/play.svg'); ?>
-                    <?php echo file_get_contents(get_template_directory_uri().'/assets/pause.svg'); ?>
+                    <?php if(!$pagination):
+                        echo file_get_contents(get_template_directory_uri().'/assets/play.svg'); 
+                        echo file_get_contents(get_template_directory_uri().'/assets/pause.svg'); 
+                        ?>
                     <div class="loader"><?php echo file_get_contents(get_template_directory_uri().'/assets/loader.svg'); ?></div>
+                    <?php endif; ?>
                     <a href="<?php echo $permalink; ?>" >
                         <h2 class="title title--first"><?php echo $title; ?><?php
                             if($subtitle):
@@ -243,10 +247,12 @@ function blocks_podcast($posts_per_page=3,$pagination=false,$offset=0){
                         </a>
                     
                 </div>
-                <div class="podcast_sm">
-                    <?php subrosa_share($permalink,wp_get_attachment_image_url(carbon_get_the_post_meta('featured_image'),'full')); ?>
-                    <?php subrosa_follow(); ?>
-                </div>
+                <?php if(!$pagination): ?>
+                    <div class="podcast_sm">
+                        <?php subrosa_share($permalink,wp_get_attachment_image_url(carbon_get_the_post_meta('featured_image'),'full')); ?>
+                        <?php subrosa_follow(); ?>
+                    </div>
+                <?php endif; ?>
             </div>
             <?php
         endwhile;
@@ -362,4 +368,28 @@ function get_recent(){
         blocks_podcast(1, true, 0);
     }
     ?></div><?php
+}
+
+function get_related_media($post_type,$id){
+    $related_items = get_posts(array('fields'=>'ids','numberposts'=>2,'post_type'=>$post_type,'post__not_in'=>array($id), 'orderby'=>'rand'));
+    ?><h3>More <?php echo $post_type=='gallery'?'galleries':'podcasts'; ?></h3>
+        <?php foreach($related_items as $item):
+            $title = get_the_title($item);
+            $subtitle = carbon_get_post_meta( $item, 'sr_subtitle' );
+            $ampersand = carbon_get_post_meta( $item, 'sr_display_amp');
+            $permalink = get_the_permalink($item);
+            ?><div class="grid--related_post grid_item">
+                <a href="<?php echo $permalink; ?>" class="grid_item--image">
+                    <?php echo wp_get_attachment_image(carbon_get_post_meta($item,'featured_image'),'medium');  ?>
+                </a>
+                <div class="grid_item--title">
+                    <a href="<?php echo $permalink; ?>" >
+                        <h3 class="title title--first"><?php echo $title; ?><?php
+                        if($subtitle){
+                        echo $ampersand?' & '.$subtitle:': '.$subtitle; 
+                        }
+                ?></h3></a>
+                </div>
+            </div><?php
+        endforeach;
 }

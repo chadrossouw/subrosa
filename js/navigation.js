@@ -83,7 +83,6 @@ shareButton.forEach((button)=>{
 else{
 	shareButton.forEach((button)=>{
 		button.addEventListener('click',openShare);
-		console.log(button);
 	});
 }
 

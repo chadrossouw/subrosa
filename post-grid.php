@@ -39,7 +39,7 @@ $type = $post->post_name;
         </div>
         <button class="button--more" id="next">
             Load more <?php echo $type; ?>
-        </button
+        </button>
 	</main><!-- #main -->
 
 <?php

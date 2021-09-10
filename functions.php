@@ -122,6 +122,9 @@ function subrosa_scripts() {
 	if(is_page_template('post-grid.php')){
 		wp_enqueue_script( 'load-more', get_template_directory_uri() . '/js/load-more.js', array('jquery'), _S_VERSION, true );
 	}
+	if(is_front_page() ){
+		wp_enqueue_script( 'home-animation', get_template_directory_uri() . '/js/home.js', array(), _S_VERSION, true );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'subrosa_scripts' );
 

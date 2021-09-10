@@ -15,14 +15,15 @@ get_header();
 		<?php if ( have_posts() ) : ?>
 
 			<header class="page-header">
+				<?php get_search_form(); ?>
 				<h1 class="page-title">
 					<?php
 					/* translators: %s: search query. */
-					printf( esc_html__( 'Search Results for: %s', 'subrosa' ), '<span>' . get_search_query() . '</span>' );
+					printf( esc_html__( 'Search Results for %s', 'subrosa' ), '<span>' . get_search_query() . '</span>' );
 					?>
 				</h1>
 			</header><!-- .page-header -->
-
+			<div class="grid">
 			<?php
 			/* Start the Loop */
 			while ( have_posts() ) :
@@ -36,9 +37,7 @@ get_header();
 				get_template_part( 'template-parts/content', 'search' );
 
 			endwhile;
-
-			the_posts_navigation();
-
+			?></div><?php
 		else :
 
 			get_template_part( 'template-parts/content', 'none' );
@@ -49,5 +48,4 @@ get_header();
 	</main><!-- #main -->
 
 <?php
-get_sidebar();
 get_footer();

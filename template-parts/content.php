@@ -9,13 +9,15 @@
 
             $subtitle = carbon_get_post_meta( $id, 'sr_subtitle' );
             $ampersand = carbon_get_post_meta( $id, 'sr_display_amp');
+			$template =substr(carbon_get_post_meta($id, 'sr_template'), 0, -2) ;
+
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="entry-header">
+<article id="post-<?php the_ID(); ?>" class="type-post <?php echo $template; ?>">
+	<header class="entry-header ">
 		<?php subrosa_post_thumbnail(); ?>
 		
-			<h2 class="title title--first"><?php echo get_the_title();  echo !$ampersand?': ':''; ?></h2>
+			<h2 class="title title--first"><?php echo get_the_title();  echo !$ampersand && $subtitle?': ':''; ?></h2>
 			<?php
 			if($subtitle){
 				?><h3><?php echo $ampersand?' & '.$subtitle:$subtitle; ?></h3><?php

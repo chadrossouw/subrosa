@@ -68,4 +68,3 @@ if ( is_front_page() && is_home() ){
 			</div>
 		</nav><!-- #site-navigation -->
 	</header><!-- #masthead -->
-			<div id="jump-fix"></div>

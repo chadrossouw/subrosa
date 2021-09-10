@@ -16,9 +16,14 @@ get_header();
 ?>
 
 	<main id="primary" class="site-main">
-
+		<div class="home_scroll_container">
+			<div id="top"></div>
 		<?php
+
 		blocks_home();
+		?>
+		</div>
+		<?php 
 		blocks_gallery();
 		blocks_podcast();	
 		?>

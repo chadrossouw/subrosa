@@ -5,6 +5,9 @@ if(podcasts.length>0){
     const player = SC.Widget(playerContainer.firstElementChild);
     podcasts.loaded = false;
 	podcasts.forEach((podcast)=>{
+        if(podcast.classList.contains('no-play')){
+            return;
+        }
         const playPauseButton = podcast.querySelectorAll('svg');
         const podcastId = podcast.dataset.id;
         player.bind(SC.Widget.Events.PAUSE,()=>{

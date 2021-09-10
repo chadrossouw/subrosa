@@ -122,7 +122,8 @@ function subrosa_gallery_carousel( $string, $attr) {
     ));
 	$count = count($posts);
     foreach($posts as $imagePost){
-        $output .= '<figure class="carousel_item"><img src="' . wp_get_attachment_image_src($imagePost->ID, 'full')[0] . '" alt="" /><figcaption>'.$imagePost->post_excerpt.'</figcaption>';
+		$excerpt = $imagePost->post_excerpt?'<p>'.$imagePost->post_excerpt.'</p>':'';
+        $output .= '<div class="carousel_item">'. wp_get_attachment_image($imagePost->ID, 'full') . $excerpt .'</div>';
     }
 
     $output .= '</div>';

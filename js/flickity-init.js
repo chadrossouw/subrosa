@@ -187,6 +187,9 @@ return Flickity;
 var elem = document.querySelectorAll('.carousel');
 if(elem.length>0){
 elem.forEach((element)=>{
+  if(element.classList.contains('no-flickity')){
+    return;
+  }
   var options={
     wrapAround: true,
     autoPlay: false,
@@ -204,7 +207,7 @@ elem.forEach((element)=>{
     var nav = element.nextElementSibling;
     options['prevNextButtons']=false;
     var navOptions={
-      wrapAround: true,
+      wrapAround: false,
       autoPlay: false,
       pageDots: false,
       freeScroll: false,
@@ -212,6 +215,7 @@ elem.forEach((element)=>{
       asNavFor:element,
       selectedAttraction: 0.01,
       friction: 0.2,
+      cellAlign: 'left',
       setGallerySize: true,
       arrowShape:'M3.56883 47.8418L18.4395 98.5781L15.5606 99.4219L0.431173 47.8027L15.5715 0.542343L18.4285 1.45761L3.56883 47.8418Z',
       fullscreen:false, 
